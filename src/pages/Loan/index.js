@@ -1,20 +1,30 @@
-import React from 'react'
-import PropTypes from 'prop-types';
+import React, { useState } from 'react'
 import AppLayout from '../../components/AppLayout';
 import AppAccordion from '../../components/AppAccordion';
 
-import './index.scss'
+import { Button } from 'antd';
 
-import { Progress, Row, Col } from 'antd';
+import './index.scss';
+
 import AppTitle from '../../components/AppTitle';
-import AppCard from '../../components/AppCard';
-import {
-    ProfileTwoTone
-} from '@ant-design/icons';
+import { AppModal } from '../../components/AppModal';
+import AppForm from '../../components/AppForm';
 
-import { formatPhoneNumber } from '../../utilities/stringHelper';
+import { PanelHeader, PanelContent } from './Panel';
+import { LoanForm } from './LoanForm';
 
 export default function Loan() {
+    const [isVisible, setVisible] = useState(false);
+
+    const cancelHandler = () => {
+        setVisible(false);
+    }
+    const showModalHandler = () => {
+        setVisible(true);
+    }
+    function okHandler() {
+        cancelHandler();
+    }
 
     const getContents = () => {
         let contents = [];
@@ -30,61 +40,16 @@ export default function Loan() {
 
     return (
         <AppLayout>
+            <div className="page-header">
+                <AppTitle variant="h3" value="Loans" />
+                <Button type="primary" onClick={showModalHandler}>Add Loan</Button>
+            </div>
             <AppAccordion contents={getContents()} />
+            <AppModal title="New Loan" isVisible={isVisible} okHandler={okHandler} cancelHandler={cancelHandler}>
+                <AppForm formContents={LoanForm} />
+            </AppModal>
         </AppLayout>
     )
-}
-
-const PanelHeader = ({ progress, type }) => {
-    return (
-        <div className="panel-header">
-            <ProfileTwoTone />
-            <AppTitle variant="h3" value={type} />
-            <Progress percent={progress} steps={5} />
-        </div>
-    )
-}
-
-const PanelContent = ({ applicants }) => {
-    return applicants.map((a, i) => {
-        return (
-            <Row key={i}>
-                <Col span={24}>
-                    <AppCard
-                        avatar={a.avatar}
-                        title={a.name}
-                        description={<CardDescription applicant={a} />} />
-                </Col>
-            </Row>
-
-        )
-    })
-}
-
-const CardDescription = ({ applicant }) => {
-    return (
-        <Row gutter={[16, 16]}>
-            <Col xs={8} sm={8} md={8} lg={12} xl={12}>
-                {formatPhoneNumber(applicant.contact)}
-            </Col>
-            <Col xs={8} sm={8} md={8} lg={12} xl={12}>
-                {applicant.applicantProgress.map(ap => {
-                    return (
-                        <Row key={ap.key} gutter={[16, 16]}>
-                            <Col> <AppTitle variant="h5" value={ap.title} /></Col>
-                            <Col>
-                                <Progress type="circle" percent={ap.value} width={30} />
-                            </Col>
-                        </Row>
-                    )
-                })}
-            </Col>
-        </Row>
-    )
-}
-
-PanelContent.propTypes = {
-    applicants: PropTypes.array
 }
 
 const LoanRecords = [

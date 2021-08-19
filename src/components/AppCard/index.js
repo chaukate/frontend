@@ -23,7 +23,7 @@ const AppCard = ({ avatar, title, description }) => {
 AppCard.propTypes = {
     avatar: PropTypes.string,
     title: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.oneOfType([PropTypes.elementType, PropTypes.object])
 }
 
 export default AppCard

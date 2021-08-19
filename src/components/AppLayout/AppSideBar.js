@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import 'antd/dist/antd.css';
 import './index.scss';
@@ -9,11 +9,23 @@ import { NavItems } from './NavItems';
 
 const { Sider } = Layout;
 
-export function AppSideBar({ isCollapsed }) {
+export function AppSideBar() {
+    const [isCollapsed, setCollapsed] = useState(true);
     const location = useLocation();
 
+    function toggle() {
+        setCollapsed(isCollapsed => !isCollapsed);
+    };
+
     return (
-        <Sider trigger={null} collapsible collapsed={isCollapsed}>
+        <Sider
+            className="app-sidebar"
+            collapsible
+            breakpoint="lg"
+            collapsedWidth="0"
+            collapsed={isCollapsed}
+            onCollapse={toggle}
+        >
             <div className="logo" />
             <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
                 {

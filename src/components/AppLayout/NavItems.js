@@ -3,6 +3,7 @@ import {
     DashboardOutlined,
     UploadOutlined,
     SolutionOutlined,
+    SubnodeOutlined
 } from '@ant-design/icons';
 
 export const NavItems = {
@@ -25,7 +26,7 @@ export const NavItems = {
         {
             "lable": "Loans",
             "link": URL.LOANS,
-            "icon": <UploadOutlined />
+            "icon": <SubnodeOutlined />
         }
     ]
 }

@@ -1,36 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 import './index.scss';
 import { Layout } from 'antd';
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-} from '@ant-design/icons';
 import { AppSideBar } from './AppSideBar';
 import { APPLICATION } from '../../utilities/constants'
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const AppLayout = ({ children }) => {
-
-    const [isCollapsed, setValue] = useState(false);
-
-    function toggle() {
-        setValue(isCollapsed => !isCollapsed);
-        console.log(isCollapsed);
-    };
-
     return (
         <Layout className="app-layout">
-            <AppSideBar isCollapsed={isCollapsed} />
+            <AppSideBar />
             <Layout className="site-layout">
-                <Header className="site-layout-background" style={{ padding: 0 }}>
-                    {React.createElement(isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                        className: 'trigger',
-                        onClick: toggle,
-                    })}
-                </Header>
                 <Content
                     className="site-layout-background"
                     style={{
@@ -48,7 +30,7 @@ const AppLayout = ({ children }) => {
 }
 
 AppLayout.propTypes = {
-    children: PropTypes.object
+    children: PropTypes.oneOfType([PropTypes.elementType, PropTypes.object, PropTypes.array])
 }
 
 export default AppLayout

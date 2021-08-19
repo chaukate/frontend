@@ -6,7 +6,7 @@ import AppTitle from "../../components/AppTitle";
 export default function Demographic() {
     return (
         <AppLayout>
-            <AppTitle variant="h1" value="This is H1 header." />
+            <AppTitle variant="h1" value="Demographic H1" />
             <AppTitle variant="h2" value="This is H2 header." />
             <AppTitle variant="h3" value="This is H3 header." />
             <AppTitle variant="h4" value="This is H4 header." />
